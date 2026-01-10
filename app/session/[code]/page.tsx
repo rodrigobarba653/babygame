@@ -782,9 +782,10 @@ export default function SessionPage() {
     broadcastRoomState(completeState)
 
     // Update session status
+    // Type assertion for update operation - cast as any to bypass Supabase type inference issues
     await supabase
       .from('sessions')
-      .update({ status: 'trivia_complete' })
+      .update({ status: 'trivia_complete' } as any)
       .eq('code', code.toUpperCase())
     
     // Update local session status
@@ -825,13 +826,14 @@ export default function SessionPage() {
       const winner = sortedPlayers[0]
 
       // Update session
+      // Type assertion for update operation - cast as any to bypass Supabase type inference issues
       supabase
         .from('sessions')
         .update({
           status: 'ended',
           winner_id: winner.userId,
           expires_at: new Date().toISOString(),
-        })
+        } as any)
         .eq('code', code.toUpperCase())
 
       setTimeout(() => {
@@ -998,13 +1000,14 @@ export default function SessionPage() {
       const winner = sortedPlayers[0]
 
       // Update session with winner
+      // Type assertion for update operation - cast as any to bypass Supabase type inference issues
       const { error: updateError } = await supabase
         .from('sessions')
         .update({
           status: 'ended',
           winner_id: winner.userId,
           expires_at: new Date().toISOString(),
-        })
+        } as any)
         .eq('code', code.toUpperCase())
 
       if (updateError) {
@@ -1066,12 +1069,13 @@ export default function SessionPage() {
     const winner = sortedPlayers[0]
 
     // Update session with winner and set status to 'ended'
+    // Type assertion for update operation - cast as any to bypass Supabase type inference issues
     const { error: updateError } = await supabase
       .from('sessions')
       .update({ 
         winner_id: winner.userId,
         status: 'ended'
-      })
+      } as any)
       .eq('code', code.toUpperCase())
 
     if (updateError) {
