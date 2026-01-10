@@ -31,26 +31,23 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Session not found' }, { status: 404 })
     }
 
-    // Type guard to ensure session has required properties
-    if (!session || typeof session !== 'object' || !('status' in session)) {
-      console.error('Invalid session data:', session)
-      return NextResponse.json({ error: 'Invalid session data' }, { status: 500 })
-    }
+    // Type assertion for selected fields
+    const sessionData = session as { winner_id: string | null; status: string }
 
     // Check if session has ended (both games complete)
-    if (session.status !== 'ended') {
-      console.error('Session not ended yet:', session.status)
+    if (sessionData.status !== 'ended') {
+      console.error('Session not ended yet:', sessionData.status)
       return NextResponse.json({ error: 'Game not complete yet' }, { status: 400 })
     }
 
     // Check if winner_id is set
-    if (!session.winner_id) {
+    if (!sessionData.winner_id) {
       console.error('No winner_id set in session')
       return NextResponse.json({ error: 'Winner not determined yet' }, { status: 400 })
     }
 
     // Check if user is the winner - compare as strings to avoid type issues
-    const sessionWinnerId = session.winner_id?.toString() || null
+    const sessionWinnerId = sessionData.winner_id?.toString() || null
     const userIdString = user.id?.toString() || null
     
     console.log('Checking winner:', { 
