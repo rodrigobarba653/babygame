@@ -372,21 +372,23 @@ export default function SessionPage() {
         if (receivedState.phase === 'results' && !receivedState.trivia && !receivedState.pictionary) {
           // Check if session status is already 'ended' - if so, keep it
           // Otherwise fetch current status from database
-          supabase
-            .from('sessions')
-            .select('status')
-            .eq('code', code.toUpperCase())
-            .single()
-            .then(({ data: sessionData }) => {
+          void (async () => {
+            try {
+              const { data: sessionData } = await supabase
+                .from('sessions')
+                .select('status')
+                .eq('code', code.toUpperCase())
+                .single()
+              
               // Type assertion for selected field
               const sessionStatusData = sessionData as { status: string } | null
               if (sessionStatusData?.status === 'ended') {
                 setSessionStatus('ended')
               }
-            })
-            .catch(() => {
+            } catch {
               // Ignore errors
-            })
+            }
+          })()
         }
         // Update current drawer ref for pictionary
         if (receivedState.pictionary?.drawerUserId) {
