@@ -78,6 +78,7 @@ export default function SessionPage() {
   const advancePictionaryTurnRef = useRef<(() => void) | null>(null)
   const revealAdvanceTimerRef = useRef<NodeJS.Timeout | null>(null)
   const guessTimerRef = useRef<NodeJS.Timeout | null>(null)
+  const handleTriviaRevealRef = useRef<((questionIndex: number) => void) | null>(null)
   const [receivedStrokes, setReceivedStrokes] = useState<Array<{ points: Array<{ x: number; y: number }>; color: string; width: number }>>([])
 
   // Broadcast room state function - defined before useEffect that uses it
@@ -691,9 +692,11 @@ export default function SessionPage() {
 
     // Move to reveal after 15s
     setTimeout(() => {
-      handleTriviaReveal(0)
+      if (handleTriviaRevealRef.current) {
+        handleTriviaRevealRef.current(0)
+      }
     }, 15000)
-  }, [isHost, broadcastRoomState, handleTriviaReveal])
+  }, [isHost, broadcastRoomState])
 
   const handleTriviaReveal = useCallback((questionIndex: number) => {
     if (!isHost || !hostStateRef.current) return
@@ -746,6 +749,11 @@ export default function SessionPage() {
     }, 3000)
   }, [isHost, broadcastRoomState, startTriviaQuestion, completeTrivia])
 
+  // Store handleTriviaReveal in ref for use in other callbacks
+  useEffect(() => {
+    handleTriviaRevealRef.current = handleTriviaReveal
+  }, [handleTriviaReveal])
+
   const startTriviaQuestion = useCallback((questionIndex: number) => {
     if (!isHost || !hostStateRef.current) return
 
@@ -773,9 +781,11 @@ export default function SessionPage() {
     broadcastRoomState(newState)
 
     setTimeout(() => {
-      handleTriviaReveal(questionIndex)
+      if (handleTriviaRevealRef.current) {
+        handleTriviaRevealRef.current(questionIndex)
+      }
     }, 15000)
-  }, [isHost, broadcastRoomState, handleTriviaReveal])
+  }, [isHost, broadcastRoomState])
 
   const completeTrivia = useCallback(async () => {
     if (!isHost || !hostStateRef.current) return
