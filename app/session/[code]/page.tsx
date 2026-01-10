@@ -532,8 +532,8 @@ export default function SessionPage() {
           // Don&apos;t award points to dummy guesses
           if (winnerUserId.startsWith('dummy-')) {
             // Still update the UI state but don&apos;t award points
-            const updatedPictionary = {
-              ...hostStateRef.current.pictionary,
+            const updatedPictionary: PictionaryState = {
+              ...hostStateRef.current.pictionary!,
               ...(awardType === 'closest' 
                 ? { closestWinnerId: winnerUserId }
                 : { funniestWinnerId: winnerUserId }
