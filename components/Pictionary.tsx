@@ -58,15 +58,13 @@ export default function Pictionary({
   >([]);
 
   const pictionary = roomState.pictionary;
-  if (!pictionary) return null;
-
-  const isDrawer = userId === pictionary.drawerUserId;
+  const isDrawer = pictionary ? userId === pictionary.drawerUserId : false;
   const showGuesses = isDrawer && roomState.phase === "pictionary_reveal";
 
   // Find drawer's name for display
-  const drawer = roomState.players.find(
-    (p) => p.userId === pictionary.drawerUserId
-  );
+  const drawer = pictionary
+    ? roomState.players.find((p) => p.userId === pictionary.drawerUserId)
+    : null;
   const drawerName = drawer?.name || "Unknown";
 
   // Drawing logic
@@ -90,12 +88,13 @@ export default function Pictionary({
 
   // Clear drawer strokes when turn index changes (new round)
   useEffect(() => {
+    if (!pictionary) return;
     setDrawerStrokes([]);
-  }, [pictionary.turnIndex]);
+  }, [pictionary?.turnIndex]);
 
   // Clear and re-render canvas when turn changes or strokes update
   useEffect(() => {
-    if (!canvasRef.current) return;
+    if (!canvasRef.current || !pictionary) return;
     const ctx = canvasRef.current.getContext("2d");
     if (!ctx) return;
 
@@ -141,11 +140,15 @@ export default function Pictionary({
     }
   }, [
     roomState.phase,
-    pictionary.turnIndex,
+    pictionary?.turnIndex,
     receivedStrokes,
     drawerStrokes,
     isDrawer,
+    pictionary,
   ]);
+
+  // Early return after all hooks
+  if (!pictionary) return null;
 
   const getPointFromEvent = (
     e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
