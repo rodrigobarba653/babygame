@@ -813,10 +813,10 @@ export default function SessionPage() {
 
     // Update session status
     // Type assertion for update operation - cast as any to bypass Supabase type inference issues
-    await (supabase
+    const updateQuery = supabase
       .from('sessions')
-      .update({ status: 'trivia_complete' } as any) as any)
-      .eq('code', code.toUpperCase())
+      .update({ status: 'trivia_complete' } as any) as any
+    await updateQuery.eq('code', code.toUpperCase())
     
     // Update local session status
     setSessionStatus('trivia_complete')
