@@ -291,12 +291,12 @@ export default function SessionPage() {
             // Store channel reference
             channelRef.current = channel
 
-            // Initialize room state (check session.host_id directly instead of isHost state)
-            const userIsHost = session.host_id === user.id
+            // Initialize room state (check sessionHostId directly instead of isHost state)
+            const userIsHost = sessionHostId === user.id
             
-            // Check if this is a re-entry (session has progressed beyond lobby)
+            // Check if this is a re-entry (sessionStatus has progressed beyond lobby)
             // Note: 'trivia_complete' status means trivia finished but can still continue to pictionary
-            const isReEntry = session.status !== 'lobby' && session.status !== 'trivia_complete' && session.status !== 'ended'
+            const isReEntry = sessionStatus !== 'lobby' && sessionStatus !== 'trivia_complete' && sessionStatus !== 'ended'
             
             if (isReEntry) {
               // Show waiting room for re-entry
