@@ -30,10 +30,10 @@ export default function Trivia({
     const trivia = roomState.trivia;
     if (!trivia) return;
     
-    if (!trivia) return;
-    
     const question = TRIVIA_QUESTIONS[trivia.questionIndex];
     const hasAnswered = trivia.answers[userId] !== undefined;
+    const showResults = roomState.phase === 'trivia_reveal';
+    const correctIndex = trivia.correctIndex;
     
     // Reset modal when question index changes (new question started)
     if (trivia.questionIndex !== previousQuestionIndexRef.current) {
