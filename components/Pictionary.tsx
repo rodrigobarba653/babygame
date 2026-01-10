@@ -401,7 +401,7 @@ export default function Pictionary({
                           guessType: typeof guess,
                         });
 
-                        if (!guess || !guess.userId) {
+                        if (!guess || !guess.userId || !guess.text) {
                           console.error(
                             `Invalid guess at index ${index}:`,
                             guess
@@ -466,7 +466,7 @@ export default function Pictionary({
                                 )}
                               </div>
                               <div className="text-sm text-gray-600">
-                                {guess.text}
+                                {guess.text || 'No guess text'}
                               </div>
                               {isClosest && (
                                 <div className="text-xs text-green-700 font-semibold mt-1">

@@ -672,6 +672,11 @@ export default function SessionPage() {
 
     // Start first trivia question
     const question = TRIVIA_QUESTIONS[0]
+    if (!question) {
+      console.error('No trivia questions available')
+      return
+    }
+    
     const newState: RoomState = {
       ...hostStateRef.current,
       phase: 'trivia_question',
@@ -706,6 +711,11 @@ export default function SessionPage() {
     if (!isHost || !hostStateRef.current) return
 
     const question = TRIVIA_QUESTIONS[questionIndex]
+    if (!question) {
+      console.error(`Question at index ${questionIndex} not found in handleTriviaReveal`)
+      return
+    }
+    
     const correctIdx = question.correctIndex
 
     // Update scores - treat host as a player (check all players including host)
@@ -766,6 +776,11 @@ export default function SessionPage() {
     if (!isHost || !hostStateRef.current) return
 
     const question = TRIVIA_QUESTIONS[questionIndex]
+    if (!question) {
+      console.error(`Question at index ${questionIndex} not found`)
+      return
+    }
+    
     const newState: RoomState = {
       ...hostStateRef.current,
       phase: 'trivia_question',

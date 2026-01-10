@@ -30,6 +30,11 @@ export default function Trivia({
     if (!trivia) return;
     
     const question = TRIVIA_QUESTIONS[trivia.questionIndex];
+    if (!question) {
+      console.error(`Question at index ${trivia.questionIndex} not found in Trivia component useEffect`)
+      return
+    }
+    
     const hasAnswered = trivia.answers[userId] !== undefined;
     const showResults = roomState.phase === 'trivia_reveal';
     const correctIndex = trivia.correctIndex;
@@ -64,6 +69,19 @@ export default function Trivia({
   if (!trivia) return null
 
   const question = TRIVIA_QUESTIONS[trivia.questionIndex]
+  // Safety check: if question is undefined, show error message
+  if (!question) {
+    return (
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="bg-white rounded-lg shadow-xl p-4 sm:p-8">
+          <div className="text-center text-red-600">
+            <p>Error: Question {trivia.questionIndex + 1} not found. Please refresh the page.</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   const hasAnswered = trivia.answers[userId] !== undefined
   const showResults = roomState.phase === 'trivia_reveal'
   const correctIndex = trivia.correctIndex
