@@ -749,7 +749,7 @@ export default function Pictionary({
                           })()}
                       </div>
 
-                      {isDrawer && onContinueToNextRound && (
+                      {isHost && onContinueToNextRound && (
                         <button
                           onClick={onContinueToNextRound}
                           className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors"
@@ -758,9 +758,9 @@ export default function Pictionary({
                         </button>
                       )}
 
-                      {!isDrawer && (
+                      {!isHost && (
                         <p className="text-gray-600 text-sm">
-                          Waiting for drawer to continue...
+                          Waiting for host to continue...
                         </p>
                       )}
                     </>

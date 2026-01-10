@@ -1078,7 +1078,12 @@ export default function SessionPage() {
   }, [advancePictionaryTurn])
 
   const handleContinueToNextRound = useCallback(() => {
-    if (!isHost || !hostStateRef.current || !hostStateRef.current.pictionary) return
+    console.log('handleContinueToNextRound called', { isHost, hasHostStateRef: !!hostStateRef.current, hasPictionary: !!hostStateRef.current?.pictionary })
+    
+    if (!isHost || !hostStateRef.current || !hostStateRef.current.pictionary) {
+      console.log('Early return in handleContinueToNextRound', { isHost, hasHostStateRef: !!hostStateRef.current, hasPictionary: !!hostStateRef.current?.pictionary })
+      return
+    }
     
     // Check if this is the last round
     const currentTurnIndex = hostStateRef.current.pictionary.turnIndex
@@ -1086,17 +1091,35 @@ export default function SessionPage() {
     const maxTurns = Math.min(5, turnOrder.length)
     const isLastRound = currentTurnIndex + 1 >= maxTurns
     
+    // Check if both winners are selected
+    const bothWinnersSelected = hostStateRef.current.pictionary.closestWinnerId && hostStateRef.current.pictionary.funniestWinnerId
+    
+    console.log('handleContinueToNextRound checks', { currentTurnIndex, maxTurns, isLastRound, bothWinnersSelected, closestWinnerId: hostStateRef.current.pictionary.closestWinnerId, funniestWinnerId: hostStateRef.current.pictionary.funniestWinnerId })
+    
     // Advance to next turn (or results if last round)
-    if (hostStateRef.current.pictionary.closestWinnerId && hostStateRef.current.pictionary.funniestWinnerId) {
+    if (bothWinnersSelected) {
       if (isLastRound) {
         // For last round, advancePictionaryTurn will automatically go to results
         // But we can also add a small delay to show the winner announcement
+        console.log('Last round - calling advancePictionaryTurn after delay')
         setTimeout(() => {
-          advancePictionaryTurn()
+          if (advancePictionaryTurnRef.current) {
+            advancePictionaryTurnRef.current()
+          } else {
+            advancePictionaryTurn()
+          }
         }, 2000) // Show winner announcement for 2 seconds
       } else {
-        advancePictionaryTurn()
+        console.log('Not last round - calling advancePictionaryTurn immediately')
+        // Use ref if available, otherwise use direct call
+        if (advancePictionaryTurnRef.current) {
+          advancePictionaryTurnRef.current()
+        } else {
+          advancePictionaryTurn()
+        }
       }
+    } else {
+      console.log('Both winners not selected yet', { closestWinnerId: hostStateRef.current.pictionary.closestWinnerId, funniestWinnerId: hostStateRef.current.pictionary.funniestWinnerId })
     }
   }, [isHost, advancePictionaryTurn])
 
