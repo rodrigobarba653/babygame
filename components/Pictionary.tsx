@@ -285,76 +285,77 @@ export default function Pictionary({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Canvas */}
           <div className="lg:col-span-2 flex justify-center">
-            <div className="w-full max-w-[400px] bg-gray-100 rounded-lg border-2 border-gray-300 p-2 sm:p-4">
-              <canvas
-                ref={canvasRef}
-                className="w-full h-64 sm:h-96 bg-white rounded cursor-crosshair touch-none"
-                onMouseDown={handleStartDraw}
-                onMouseMove={handleDraw}
-                onMouseUp={handleEndDraw}
-                onMouseLeave={handleEndDraw}
-                onTouchStart={handleStartDraw}
-                onTouchMove={handleDraw}
-                onTouchEnd={handleEndDraw}
-                style={{ touchAction: "none" }}
-              />
-            </div>
-          </div>
-
-            {roomState.phase === "pictionary_draw" && (
-              <div className="mt-4 text-center">
-                {isDrawer ? (
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <p className="text-blue-800 font-semibold">
-                      You&apos;re drawing:{" "}
-                      <span className="text-xl">{pictionary.promptFull}</span>
-                    </p>
-                  </div>
-                ) : (
-                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                    <p className="text-gray-700">
-                      Drawing:{" "}
-                      <span className="font-mono text-lg">
-                        {pictionary.promptMasked}
-                      </span>
-                    </p>
-                  </div>
-                )}
+            <div className="w-full max-w-[400px]">
+              <div className="bg-gray-100 rounded-lg border-2 border-gray-300 p-2 sm:p-4">
+                <canvas
+                  ref={canvasRef}
+                  className="w-full h-64 sm:h-96 bg-white rounded cursor-crosshair touch-none"
+                  onMouseDown={handleStartDraw}
+                  onMouseMove={handleDraw}
+                  onMouseUp={handleEndDraw}
+                  onMouseLeave={handleEndDraw}
+                  onTouchStart={handleStartDraw}
+                  onTouchMove={handleDraw}
+                  onTouchEnd={handleEndDraw}
+                  style={{ touchAction: "none" }}
+                />
               </div>
-            )}
 
-            {roomState.phase === "pictionary_guess" && !isDrawer && (
-              <div className="mt-4">
-                <form
-                  onSubmit={handleGuessSubmit}
-                  className="flex flex-col sm:flex-row gap-2"
-                >
-                  <input
-                    type="text"
-                    value={guessText}
-                    onChange={(e) => setGuessText(e.target.value)}
-                    placeholder="Enter your guess..."
-                    className="flex-1 px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 min-h-[44px]"
-                    autoFocus
-                  />
-                  <button
-                    type="submit"
-                    className="w-full sm:w-auto bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 min-h-[44px]"
+              {roomState.phase === "pictionary_draw" && (
+                <div className="mt-4 text-center">
+                  {isDrawer ? (
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                      <p className="text-blue-800 font-semibold">
+                        You&apos;re drawing:{" "}
+                        <span className="text-xl">{pictionary.promptFull}</span>
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                      <p className="text-gray-700">
+                        Drawing:{" "}
+                        <span className="font-mono text-lg">
+                          {pictionary.promptMasked}
+                        </span>
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {roomState.phase === "pictionary_guess" && !isDrawer && (
+                <div className="mt-4">
+                  <form
+                    onSubmit={handleGuessSubmit}
+                    className="flex flex-col sm:flex-row gap-2"
                   >
-                    Guess
-                  </button>
-                </form>
-              </div>
-            )}
+                    <input
+                      type="text"
+                      value={guessText}
+                      onChange={(e) => setGuessText(e.target.value)}
+                      placeholder="Enter your guess..."
+                      className="flex-1 px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 min-h-[44px]"
+                      autoFocus
+                    />
+                    <button
+                      type="submit"
+                      className="w-full sm:w-auto bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 min-h-[44px]"
+                    >
+                      Guess
+                    </button>
+                  </form>
+                </div>
+              )}
 
-            {roomState.phase === "pictionary_reveal" && (
-              <div className="mt-4 bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-                <p className="text-green-800 font-semibold text-lg">
-                  The word was:{" "}
-                  <span className="text-xl">{pictionary.promptFull}</span>
-                </p>
-              </div>
-            )}
+              {roomState.phase === "pictionary_reveal" && (
+                <div className="mt-4 bg-green-50 border border-green-200 rounded-lg p-4 text-center">
+                  <p className="text-green-800 font-semibold text-lg">
+                    The word was:{" "}
+                    <span className="text-xl">{pictionary.promptFull}</span>
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Sidebar */}
