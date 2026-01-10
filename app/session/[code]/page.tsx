@@ -79,6 +79,8 @@ export default function SessionPage() {
   const revealAdvanceTimerRef = useRef<NodeJS.Timeout | null>(null)
   const guessTimerRef = useRef<NodeJS.Timeout | null>(null)
   const handleTriviaRevealRef = useRef<((questionIndex: number) => void) | null>(null)
+  const startTriviaQuestionRef = useRef<((questionIndex: number) => void) | null>(null)
+  const completeTriviaRef = useRef<(() => void) | null>(null)
   const [receivedStrokes, setReceivedStrokes] = useState<Array<{ points: Array<{ x: number; y: number }>; color: string; width: number }>>([])
 
   // Broadcast room state function - defined before useEffect that uses it
@@ -787,6 +789,11 @@ export default function SessionPage() {
     }, 15000)
   }, [isHost, broadcastRoomState])
 
+  // Store startTriviaQuestion in ref for use in other callbacks
+  useEffect(() => {
+    startTriviaQuestionRef.current = startTriviaQuestion
+  }, [startTriviaQuestion])
+
   const completeTrivia = useCallback(async () => {
     if (!isHost || !hostStateRef.current) return
 
@@ -810,6 +817,11 @@ export default function SessionPage() {
     // Update local session status
     setSessionStatus('trivia_complete')
   }, [isHost, code, supabase, broadcastRoomState])
+
+  // Store completeTrivia in ref for use in other callbacks
+  useEffect(() => {
+    completeTriviaRef.current = completeTrivia
+  }, [completeTrivia])
 
   const startPictionaryTurn = useCallback((turnIndex: number, turnOrder: string[]) => {
     if (!isHost || !hostStateRef.current) return
