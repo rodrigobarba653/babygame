@@ -80,6 +80,17 @@ export default function SessionPage() {
   const guessTimerRef = useRef<NodeJS.Timeout | null>(null)
   const [receivedStrokes, setReceivedStrokes] = useState<Array<{ points: Array<{ x: number; y: number }>; color: string; width: number }>>([])
 
+  // Broadcast room state function - defined before useEffect that uses it
+  const broadcastRoomState = useCallback((state: RoomState) => {
+    if (channelRef.current) {
+      channelRef.current.send({
+        type: 'broadcast',
+        event: 'ROOM_STATE',
+        payload: state,
+      })
+    }
+  }, [])
+
   // Initialize session
   useEffect(() => {
     const initSession = async () => {
