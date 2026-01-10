@@ -19,6 +19,12 @@ export default function Trivia({
   userId,
   onAnswer,
 }: TriviaProps) {
+  // Hooks must be called before any early returns
+  const previousQuestionIndexRef = useRef<number>(roomState.trivia?.questionIndex ?? 0)
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false)
+  const [isCorrect, setIsCorrect] = useState(false)
+  const [feedbackMessage, setFeedbackMessage] = useState('')
+
   const trivia = roomState.trivia
   if (!trivia) return null
 
@@ -27,14 +33,13 @@ export default function Trivia({
   const showResults = roomState.phase === 'trivia_reveal'
   const correctIndex = trivia.correctIndex
   
-  // Track previous question index to detect when new question starts
-  const previousQuestionIndexRef = useRef<number>(trivia.questionIndex)
-  const [showFeedbackModal, setShowFeedbackModal] = useState(false)
-  const [isCorrect, setIsCorrect] = useState(false)
-  const [feedbackMessage, setFeedbackMessage] = useState('')
-  
   // Show modal when reveal phase starts, hide when question changes or phase changes
   useEffect(() => {
+    if (!trivia) return;
+    
+    const question = TRIVIA_QUESTIONS[trivia.questionIndex];
+    const hasAnswered = trivia.answers[userId] !== undefined;
+    
     // Reset modal when question index changes (new question started)
     if (trivia.questionIndex !== previousQuestionIndexRef.current) {
       setShowFeedbackModal(false)
@@ -58,7 +63,7 @@ export default function Trivia({
       // Hide modal when we leave reveal phase
       setShowFeedbackModal(false)
     }
-  }, [showResults, correctIndex, hasAnswered, trivia.answers, trivia.questionIndex, userId, question.options])
+  }, [trivia, showResults, correctIndex, userId])
 
   return (
     <div className="max-w-4xl mx-auto px-4">

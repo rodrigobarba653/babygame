@@ -299,7 +299,7 @@ export default function SessionPage() {
             if (userIsHost) {
               // Host: if re-entering during active game, wait for state sync
               if (isReEntry) {
-                // Don't initialize state yet, wait for broadcast or presence sync
+                // Don&apos;t initialize state yet, wait for broadcast or presence sync
                 setHasReceivedState(false)
               } else {
                 // Normal entry or trivia_complete - initialize state
@@ -515,9 +515,9 @@ export default function SessionPage() {
         if (drawerMatches && phaseMatches) {
           console.log('Host: Conditions met, updating state...')
           
-          // Don't award points to dummy guesses
+          // Don&apos;t award points to dummy guesses
           if (winnerUserId.startsWith('dummy-')) {
-            // Still update the UI state but don't award points
+            // Still update the UI state but don&apos;t award points
             const updatedPictionary = {
               ...hostStateRef.current.pictionary,
               ...(awardType === 'closest' 
@@ -1537,7 +1537,7 @@ export default function SessionPage() {
                     // Show continue to pictionary if:
                     // - Session status is 'trivia_complete' (trivia finished), OR
                     // - We're in results phase, no pictionary state, and game isn't complete yet
-                    // Don't show if reveal button is available (game is complete)
+                    // Don&apos;t show if reveal button is available (game is complete)
                     (sessionStatus === 'trivia_complete' || (!roomState.trivia && !roomState.pictionary && sessionStatus !== 'ended'))
                       ? () => {
                           if (startPictionaryRef.current) {

@@ -97,7 +97,7 @@ export default function Reveal({ roomState, userId, sessionCode }: RevealProps) 
       <div className="bg-white rounded-lg shadow-xl p-4 sm:p-8">
         <div className="text-center py-6 sm:py-12">
           <div className="text-2xl sm:text-3xl font-bold text-gray-700 mb-4">
-            You didn't win
+            You didn&apos;t win
           </div>
           <div className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8">
             Only the winner can see the gender reveal.
