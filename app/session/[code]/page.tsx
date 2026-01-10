@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabaseClient'
 import type {
   RoomState,
   Player,
+  PictionaryState,
 } from '@/lib/realtime/types'
 import { TRIVIA_QUESTIONS, NUM_TRIVIA_QUESTIONS } from '@/data/trivia'
 import { PICTIONARY_PROMPTS } from '@/data/prompts'
@@ -576,8 +577,8 @@ export default function SessionPage() {
             p.userId === winnerUserId ? { ...p, points: p.points + pointsToAward } : p
           )
 
-          const updatedPictionary = {
-            ...hostStateRef.current.pictionary,
+          const updatedPictionary: PictionaryState = {
+            ...hostStateRef.current.pictionary!,
             ...(awardType === 'closest' 
               ? { closestWinnerId: winnerUserId }
               : { funniestWinnerId: winnerUserId }
@@ -1260,8 +1261,8 @@ export default function SessionPage() {
       
       // Don't award points to dummy guesses
       if (winnerUserId.startsWith('dummy-')) {
-        const updatedPictionary = {
-          ...hostStateRef.current.pictionary,
+        const updatedPictionary: PictionaryState = {
+          ...hostStateRef.current.pictionary!,
           ...(awardType === 'closest' 
             ? { closestWinnerId: winnerUserId }
             : { funniestWinnerId: winnerUserId }
@@ -1284,8 +1285,8 @@ export default function SessionPage() {
         p.userId === winnerUserId ? { ...p, points: p.points + pointsToAward } : p
       );
 
-      const updatedPictionary = {
-        ...hostStateRef.current.pictionary,
+      const updatedPictionary: PictionaryState = {
+        ...hostStateRef.current.pictionary!,
         ...(awardType === 'closest' 
           ? { closestWinnerId: winnerUserId }
           : { funniestWinnerId: winnerUserId }
