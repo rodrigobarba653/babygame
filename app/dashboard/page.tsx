@@ -38,7 +38,9 @@ export default function DashboardPage() {
       if (user) {
         const { data } = await supabase.from('profiles').select('name').eq('id', user.id).single()
         if (data) {
-          setName(data.name)
+          // Type assertion for selected field
+          const profileData = data as { name: string }
+          setName(profileData.name)
         }
 
         // Check for active session where user is host and status is 'trivia_complete'
