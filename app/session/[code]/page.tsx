@@ -558,15 +558,16 @@ export default function SessionPage() {
               const isLastRound = currentTurnIndex + 1 >= maxTurns;
               
               if (bothWinnersSelected && isLastRound && advancePictionaryTurnRef.current) {
-              // Auto-advance to results after 10 seconds if button not clicked
-              // Clear any existing timer
-              if (revealAdvanceTimerRef.current) {
-                clearTimeout(revealAdvanceTimerRef.current);
+                // Auto-advance to results after 10 seconds if button not clicked
+                // Clear any existing timer
+                if (revealAdvanceTimerRef.current) {
+                  clearTimeout(revealAdvanceTimerRef.current);
+                }
+                revealAdvanceTimerRef.current = setTimeout(() => {
+                  advancePictionaryTurnRef.current?.();
+                  revealAdvanceTimerRef.current = null;
+                }, 10000);
               }
-              revealAdvanceTimerRef.current = setTimeout(() => {
-                advancePictionaryTurnRef.current?.();
-                revealAdvanceTimerRef.current = null;
-              }, 10000);
             }
             
             return
