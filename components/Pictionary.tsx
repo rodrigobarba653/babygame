@@ -42,11 +42,7 @@ export default function Pictionary({
   onRevealGender,
   receivedStrokes = [],
 }: PictionaryProps) {
-  const pictionary = roomState.pictionary;
-  if (!pictionary) return null;
-
-  // Early return check - keep this AFTER pictionary check so guesses are preserved
-
+  // Hooks must be called before any early returns
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [guessText, setGuessText] = useState("");
@@ -60,6 +56,10 @@ export default function Pictionary({
       width: number;
     }>
   >([]);
+
+  const pictionary = roomState.pictionary;
+  if (!pictionary) return null;
+
   const isDrawer = userId === pictionary.drawerUserId;
   const showGuesses = isDrawer && roomState.phase === "pictionary_reveal";
 

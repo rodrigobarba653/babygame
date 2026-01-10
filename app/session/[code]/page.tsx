@@ -624,7 +624,7 @@ export default function SessionPage() {
         channelRef.current.unsubscribe()
       }
     }
-  }, [code, router, supabase, isHost])
+  }, [code, router, supabase, isHost, broadcastRoomState, isReconnecting])
 
   const broadcastRoomState = useCallback((state: RoomState) => {
     if (channelRef.current) {
@@ -676,7 +676,7 @@ export default function SessionPage() {
     setTimeout(() => {
       handleTriviaReveal(0)
     }, 15000)
-  }, [isHost, broadcastRoomState])
+  }, [isHost, broadcastRoomState, handleTriviaReveal])
 
   const handleTriviaReveal = useCallback((questionIndex: number) => {
     if (!isHost || !hostStateRef.current) return
@@ -727,7 +727,7 @@ export default function SessionPage() {
         completeTrivia()
       }
     }, 3000)
-  }, [isHost, broadcastRoomState])
+  }, [isHost, broadcastRoomState, startTriviaQuestion, completeTrivia])
 
   const startTriviaQuestion = useCallback((questionIndex: number) => {
     if (!isHost || !hostStateRef.current) return

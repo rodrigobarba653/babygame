@@ -349,7 +349,7 @@ export default function DashboardPage() {
             <div className="border-2 border-dashed border-pink-300 rounded-lg p-6 text-center">
               <h2 className="text-xl font-semibold mb-4 text-gray-800">Create a Session</h2>
               <p className="text-gray-600 mb-4">
-                Start a new game session as the host. You'll be able to control the game flow.
+                Start a new game session as the host. You&apos;ll be able to control the game flow.
               </p>
               <button
                 onClick={handleCreateSession}
