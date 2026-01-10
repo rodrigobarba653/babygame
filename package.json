@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "prebuild": "npm run lint && npm run type-check",
-    "verify": "npm run lint && npm run type-check && npm run build"
+    "verify": "npm run lint && npm run type-check && npm run build",
+    "pre-push": "npm run lint && npm run type-check"
   },
   "dependencies": {
     "@supabase/ssr": "^0.1.0",
