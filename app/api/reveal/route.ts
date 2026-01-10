@@ -31,6 +31,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Session not found' }, { status: 404 })
     }
 
+    // Type guard to ensure session has required properties
+    if (!session || typeof session !== 'object' || !('status' in session)) {
+      console.error('Invalid session data:', session)
+      return NextResponse.json({ error: 'Invalid session data' }, { status: 500 })
+    }
+
     // Check if session has ended (both games complete)
     if (session.status !== 'ended') {
       console.error('Session not ended yet:', session.status)

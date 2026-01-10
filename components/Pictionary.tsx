@@ -90,7 +90,7 @@ export default function Pictionary({
   useEffect(() => {
     if (!pictionary) return;
     setDrawerStrokes([]);
-  }, [pictionary?.turnIndex]);
+  }, [pictionary?.turnIndex, pictionary]);
 
   // Clear and re-render canvas when turn changes or strokes update
   useEffect(() => {
