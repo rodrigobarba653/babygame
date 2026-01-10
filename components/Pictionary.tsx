@@ -284,8 +284,8 @@ export default function Pictionary({
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Canvas */}
-          <div className="lg:col-span-2">
-            <div className="bg-gray-100 rounded-lg border-2 border-gray-300 p-2 sm:p-4">
+          <div className="lg:col-span-2 flex justify-center">
+            <div className="w-full max-w-[400px] bg-gray-100 rounded-lg border-2 border-gray-300 p-2 sm:p-4">
               <canvas
                 ref={canvasRef}
                 className="w-full h-64 sm:h-96 bg-white rounded cursor-crosshair touch-none"
@@ -299,6 +299,7 @@ export default function Pictionary({
                 style={{ touchAction: "none" }}
               />
             </div>
+          </div>
 
             {roomState.phase === "pictionary_draw" && (
               <div className="mt-4 text-center">
