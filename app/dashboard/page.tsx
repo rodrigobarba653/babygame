@@ -54,10 +54,11 @@ export default function DashboardPage() {
           .limit(1)
 
         if (sessions && sessions.length > 0) {
-          const session = sessions[0]
+          // Type assertion for selected fields
+          const sessionData = sessions[0] as { code: string; status: string }
           // Only show if status is 'trivia_complete' (can continue to pictionary)
-          if (session.status === 'trivia_complete') {
-            setActiveSession(session)
+          if (sessionData.status === 'trivia_complete') {
+            setActiveSession(sessionData)
           }
         }
       }
@@ -148,8 +149,12 @@ export default function DashboardPage() {
         .order('created_at', { ascending: false })
         .limit(1)
 
-      if (sessions && sessions.length > 0 && sessions[0].status === 'trivia_complete') {
-        setActiveSession(sessions[0])
+      if (sessions && sessions.length > 0) {
+        // Type assertion for selected fields
+        const sessionData = sessions[0] as { code: string; status: string }
+        if (sessionData.status === 'trivia_complete') {
+          setActiveSession(sessionData)
+        }
       }
     } catch (err: any) {
       console.error('Error deleting session:', err)
