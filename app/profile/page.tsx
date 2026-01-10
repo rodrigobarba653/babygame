@@ -60,11 +60,12 @@ export default function ProfilePage() {
         return
       }
 
+      // Type assertion for upsert operation - cast as any to bypass Supabase type inference issues
       const { error } = await supabase.from('profiles').upsert({
         id: user.id,
         name,
         relationship,
-      })
+      } as any)
 
       if (error) throw error
 
