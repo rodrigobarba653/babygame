@@ -89,6 +89,7 @@ export default function SessionPage() {
         payload: state,
       })
     }
+    setRoomState(state)
   }, [])
 
   // Initialize session
@@ -655,17 +656,6 @@ export default function SessionPage() {
       }
     }
   }, [code, router, supabase, isHost, broadcastRoomState, isReconnecting])
-
-  const broadcastRoomState = useCallback((state: RoomState) => {
-    if (channelRef.current) {
-      channelRef.current.send({
-        type: 'broadcast',
-        event: 'ROOM_STATE',
-        payload: state,
-      })
-    }
-    setRoomState(state)
-  }, [])
 
   const startGame = useCallback(() => {
     if (!isHost || !hostStateRef.current) return
