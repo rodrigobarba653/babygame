@@ -4,6 +4,7 @@ import { useState, FormEvent, useEffect } from 'react'
 import { createClient } from '@/lib/supabaseClient'
 import { useRouter } from 'next/navigation'
 import type { Relationship } from '@/lib/realtime/types'
+import Modal from '@/components/Modal'
 
 const RELATIONSHIPS: Relationship[] = ['Mother', 'Father', 'Grandparent', 'Aunt/Uncle', 'Friend']
 
@@ -129,6 +130,14 @@ export default function ProfilePage() {
           </button>
         </form>
       </div>
+
+      <Modal
+        isOpen={modal.isOpen}
+        title={modal.title}
+        message={modal.message}
+        type={modal.type}
+        onClose={closeModal}
+      />
     </div>
   )
 }
