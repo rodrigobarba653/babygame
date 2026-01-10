@@ -550,13 +550,14 @@ export default function SessionPage() {
             broadcastRoomState(newState)
             
             // Check if both winners selected and last round - auto advance
-            const bothWinnersSelected = newState.pictionary.closestWinnerId && newState.pictionary.funniestWinnerId;
-            const currentTurnIndex = newState.pictionary.turnIndex;
-            const turnOrder = newState.pictionary.turnOrder;
-            const maxTurns = Math.min(5, turnOrder.length);
-            const isLastRound = currentTurnIndex + 1 >= maxTurns;
-            
-            if (bothWinnersSelected && isLastRound && advancePictionaryTurnRef.current) {
+            if (newState.pictionary) {
+              const bothWinnersSelected = newState.pictionary.closestWinnerId && newState.pictionary.funniestWinnerId;
+              const currentTurnIndex = newState.pictionary.turnIndex;
+              const turnOrder = newState.pictionary.turnOrder;
+              const maxTurns = Math.min(5, turnOrder.length);
+              const isLastRound = currentTurnIndex + 1 >= maxTurns;
+              
+              if (bothWinnersSelected && isLastRound && advancePictionaryTurnRef.current) {
               // Auto-advance to results after 10 seconds if button not clicked
               // Clear any existing timer
               if (revealAdvanceTimerRef.current) {
@@ -596,13 +597,14 @@ export default function SessionPage() {
           broadcastRoomState(newState)
           
           // Check if both winners selected and last round - auto advance
-          const bothWinnersSelected = newState.pictionary.closestWinnerId && newState.pictionary.funniestWinnerId;
-          const currentTurnIndex = newState.pictionary.turnIndex;
-          const turnOrder = newState.pictionary.turnOrder;
-          const maxTurns = Math.min(5, turnOrder.length);
-          const isLastRound = currentTurnIndex + 1 >= maxTurns;
-          
-          if (bothWinnersSelected && isLastRound && advancePictionaryTurnRef.current) {
+          if (newState.pictionary) {
+            const bothWinnersSelected = newState.pictionary.closestWinnerId && newState.pictionary.funniestWinnerId;
+            const currentTurnIndex = newState.pictionary.turnIndex;
+            const turnOrder = newState.pictionary.turnOrder;
+            const maxTurns = Math.min(5, turnOrder.length);
+            const isLastRound = currentTurnIndex + 1 >= maxTurns;
+            
+            if (bothWinnersSelected && isLastRound && advancePictionaryTurnRef.current) {
             setTimeout(() => {
               advancePictionaryTurnRef.current?.();
             }, 3000);
@@ -1304,13 +1306,14 @@ export default function SessionPage() {
       broadcastRoomState(newState);
       
       // Check if both winners are selected AND this is the last round
-      const bothWinnersSelected = newState.pictionary.closestWinnerId && newState.pictionary.funniestWinnerId;
-      const currentTurnIndex = newState.pictionary.turnIndex;
-      const turnOrder = newState.pictionary.turnOrder;
-      const maxTurns = Math.min(5, turnOrder.length);
-      const isLastRound = currentTurnIndex + 1 >= maxTurns;
-      
-      if (bothWinnersSelected && isLastRound && advancePictionaryTurnRef.current) {
+      if (newState.pictionary) {
+        const bothWinnersSelected = newState.pictionary.closestWinnerId && newState.pictionary.funniestWinnerId;
+        const currentTurnIndex = newState.pictionary.turnIndex;
+        const turnOrder = newState.pictionary.turnOrder;
+        const maxTurns = Math.min(5, turnOrder.length);
+        const isLastRound = currentTurnIndex + 1 >= maxTurns;
+        
+        if (bothWinnersSelected && isLastRound && advancePictionaryTurnRef.current) {
         // Auto-advance to results after 10 seconds if button not clicked
         // Clear any existing timer
         if (revealAdvanceTimerRef.current) {
