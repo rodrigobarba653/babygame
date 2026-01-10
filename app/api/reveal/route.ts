@@ -76,7 +76,7 @@ export async function POST(request: Request) {
 
     // Return the gender reveal (hardcoded as specified)
     return NextResponse.json({
-      revealText: "It's a !!!!!!!!",
+      revealText: "It's a Boy!!!!!!!!",
     });
   } catch (error: any) {
     console.error("Error in reveal API:", error);
