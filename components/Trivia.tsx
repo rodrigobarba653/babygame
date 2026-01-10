@@ -25,16 +25,11 @@ export default function Trivia({
   const [isCorrect, setIsCorrect] = useState(false)
   const [feedbackMessage, setFeedbackMessage] = useState('')
 
-  const trivia = roomState.trivia
-  if (!trivia) return null
-
-  const question = TRIVIA_QUESTIONS[trivia.questionIndex]
-  const hasAnswered = trivia.answers[userId] !== undefined
-  const showResults = roomState.phase === 'trivia_reveal'
-  const correctIndex = trivia.correctIndex
-  
   // Show modal when reveal phase starts, hide when question changes or phase changes
   useEffect(() => {
+    const trivia = roomState.trivia;
+    if (!trivia) return;
+    
     if (!trivia) return;
     
     const question = TRIVIA_QUESTIONS[trivia.questionIndex];
@@ -63,7 +58,16 @@ export default function Trivia({
       // Hide modal when we leave reveal phase
       setShowFeedbackModal(false)
     }
-  }, [trivia, showResults, correctIndex, userId])
+  }, [roomState.trivia, roomState.phase, userId])
+
+  // Early return after all hooks
+  const trivia = roomState.trivia
+  if (!trivia) return null
+
+  const question = TRIVIA_QUESTIONS[trivia.questionIndex]
+  const hasAnswered = trivia.answers[userId] !== undefined
+  const showResults = roomState.phase === 'trivia_reveal'
+  const correctIndex = trivia.correctIndex
 
   return (
     <div className="max-w-4xl mx-auto px-4">

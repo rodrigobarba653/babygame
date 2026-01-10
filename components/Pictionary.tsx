@@ -147,6 +147,24 @@ export default function Pictionary({
     pictionary,
   ]);
 
+  // Throttled stroke batch sender
+  useEffect(() => {
+    if (strokeBuffer.length > 0 && !isDrawing) {
+      const timer = setTimeout(() => {
+        if (strokeBuffer.length > 0) {
+          onStrokeBatch(strokeBuffer, "#000000", 4);
+          // Also store in drawer strokes for local rendering
+          setDrawerStrokes((prevStrokes) => [
+            ...prevStrokes,
+            { points: strokeBuffer, color: "#000000", width: 4 },
+          ]);
+          setStrokeBuffer([]);
+        }
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [strokeBuffer, isDrawing, onStrokeBatch]);
+
   // Early return after all hooks
   if (!pictionary) return null;
 
@@ -228,24 +246,6 @@ export default function Pictionary({
     }
   };
 
-  // Throttled stroke batch sender
-  useEffect(() => {
-    if (strokeBuffer.length > 0 && !isDrawing) {
-      const timer = setTimeout(() => {
-        if (strokeBuffer.length > 0) {
-          onStrokeBatch(strokeBuffer, "#000000", 4);
-          // Also store in drawer strokes for local rendering
-          setDrawerStrokes((prevStrokes) => [
-            ...prevStrokes,
-            { points: strokeBuffer, color: "#000000", width: 4 },
-          ]);
-          setStrokeBuffer([]);
-        }
-      }, 100);
-      return () => clearTimeout(timer);
-    }
-  }, [strokeBuffer, isDrawing, onStrokeBatch]);
-
   const handleGuessSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!guessText.trim() || roomState.phase !== "pictionary_guess") return;
@@ -266,7 +266,7 @@ export default function Pictionary({
               <div className="bg-purple-50 border-2 border-purple-300 rounded-lg px-4 py-2 shadow-sm">
                 <p className="text-purple-800 font-bold text-sm md:text-base">
                   {isDrawer ? (
-                    <span>You're drawing!</span>
+                    <span>You&apos;re drawing!</span>
                   ) : (
                     <span>
                       {drawerName} is now drawing! Can you guess what it is?
@@ -307,7 +307,7 @@ export default function Pictionary({
                 {isDrawer ? (
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                     <p className="text-blue-800 font-semibold">
-                      You're drawing:{" "}
+                      You&apos;re drawing:{" "}
                       <span className="text-xl">{pictionary.promptFull}</span>
                     </p>
                   </div>
@@ -678,7 +678,7 @@ export default function Pictionary({
                             onClick={onRevealGender}
                             className="w-full bg-pink-600 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:bg-pink-700 transition-colors"
                           >
-                            Show the Baby's Gender
+                            Show the Baby&apos;s Gender
                           </button>
                         )}
 
@@ -708,7 +708,7 @@ export default function Pictionary({
                               : roomState.players.find(
                                   (p) => p.userId === pictionary.closestWinnerId
                                 );
-                            if (isDummy) return null; // Don't show dummy winners in congrats
+                            if (isDummy) return null; // Don&apos;t show dummy winners in congrats
                             return (
                               <div className="bg-green-100 border-2 border-green-500 rounded-lg p-4">
                                 <p className="text-sm text-gray-600 mb-1">
@@ -734,7 +734,7 @@ export default function Pictionary({
                                   (p) =>
                                     p.userId === pictionary.funniestWinnerId
                                 );
-                            if (isDummy) return null; // Don't show dummy winners in congrats
+                            if (isDummy) return null; // Don&apos;t show dummy winners in congrats
                             return (
                               <div className="bg-purple-100 border-2 border-purple-500 rounded-lg p-4">
                                 <p className="text-sm text-gray-600 mb-1">
