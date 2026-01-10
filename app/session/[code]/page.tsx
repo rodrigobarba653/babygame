@@ -861,13 +861,12 @@ export default function SessionPage() {
 
       // Update session
       // Type assertion for update operation - cast as any to bypass Supabase type inference issues
-      supabase
-        .from('sessions')
+      void (supabase.from('sessions') as any)
         .update({
           status: 'ended',
           winner_id: winner.userId,
           expires_at: new Date().toISOString(),
-        } as any)
+        })
         .eq('code', code.toUpperCase())
 
       setTimeout(() => {
@@ -918,7 +917,6 @@ export default function SessionPage() {
     if (!isHost || !hostStateRef.current) return
 
     const turnOrder = hostStateRef.current.players.map((p) => p.userId)
-    const numTurns = Math.min(5, turnOrder.length)
     pictionaryPromptsRef.current = [...PICTIONARY_PROMPTS].sort(() => Math.random() - 0.5)
     pictionaryTurnIndexRef.current = 0
 
@@ -1035,13 +1033,12 @@ export default function SessionPage() {
 
       // Update session with winner
       // Type assertion for update operation - cast as any to bypass Supabase type inference issues
-      const { error: updateError } = await supabase
-        .from('sessions')
+      const { error: updateError } = await (supabase.from('sessions') as any)
         .update({
           status: 'ended',
           winner_id: winner.userId,
           expires_at: new Date().toISOString(),
-        } as any)
+        })
         .eq('code', code.toUpperCase())
 
       if (updateError) {
@@ -1104,12 +1101,11 @@ export default function SessionPage() {
 
     // Update session with winner and set status to 'ended'
     // Type assertion for update operation - cast as any to bypass Supabase type inference issues
-    const { error: updateError } = await supabase
-      .from('sessions')
+    const { error: updateError } = await (supabase.from('sessions') as any)
       .update({ 
         winner_id: winner.userId,
         status: 'ended'
-      } as any)
+      })
       .eq('code', code.toUpperCase())
 
     if (updateError) {
@@ -1395,34 +1391,6 @@ export default function SessionPage() {
     })
   }, [userId, roomState])
 
-  const handleClearCanvas = useCallback(() => {
-    if (!channelRef.current) return
-
-    channelRef.current.send({
-      type: 'broadcast',
-      event: 'CLEAR_CANVAS',
-    })
-  }, [])
-
-  const handleResetScoreboard = useCallback(() => {
-    if (!isHost || !hostStateRef.current) return
-
-    // Reset all players' points to 0
-    const updatedPlayers = hostStateRef.current.players.map((player) => ({
-      ...player,
-      points: 0,
-    }))
-
-    const resetState: RoomState = {
-      ...hostStateRef.current,
-      players: updatedPlayers,
-    }
-
-    hostStateRef.current = resetState
-    setRoomState(resetState)
-    broadcastRoomState(resetState)
-  }, [isHost, broadcastRoomState])
-
   const handleExitSession = useCallback(async () => {
     // Leave the channel properly
     if (channelRef.current) {
@@ -1570,7 +1538,6 @@ export default function SessionPage() {
             onGuessSubmit={handleGuessSubmit}
             onPickWinner={handlePickWinner}
             onStrokeBatch={handleStrokeBatch}
-            onClearCanvas={handleClearCanvas}
             onContinueToNextRound={handleContinueToNextRound}
             onRevealGender={handleRevealGender}
             receivedStrokes={receivedStrokes}

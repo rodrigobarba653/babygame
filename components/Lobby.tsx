@@ -1,6 +1,6 @@
 'use client'
 
-import type { Player, RoomState } from '@/lib/realtime/types'
+import type { RoomState } from '@/lib/realtime/types'
 import { getInitials } from '@/lib/utils'
 
 interface LobbyProps {

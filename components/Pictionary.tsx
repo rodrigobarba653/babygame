@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import type { RoomState, PictionaryState } from "@/lib/realtime/types";
+import type { RoomState } from "@/lib/realtime/types";
 import Timer from "./Timer";
 
 interface PictionaryProps {
@@ -20,7 +20,6 @@ interface PictionaryProps {
     isStart?: boolean,
     isEnd?: boolean
   ) => void;
-  onClearCanvas: () => void;
   onContinueToNextRound?: () => void;
   onRevealGender?: () => void;
   receivedStrokes?: Array<{
@@ -37,7 +36,6 @@ export default function Pictionary({
   onGuessSubmit,
   onPickWinner,
   onStrokeBatch,
-  onClearCanvas,
   onContinueToNextRound,
   onRevealGender,
   receivedStrokes = [],
@@ -59,7 +57,6 @@ export default function Pictionary({
 
   const pictionary = roomState.pictionary;
   const isDrawer = pictionary ? userId === pictionary.drawerUserId : false;
-  const showGuesses = isDrawer && roomState.phase === "pictionary_reveal";
 
   // Find drawer's name for display
   const drawer = pictionary
@@ -163,6 +160,7 @@ export default function Pictionary({
       }, 100);
       return () => clearTimeout(timer);
     }
+    return undefined;
   }, [strokeBuffer, isDrawing, onStrokeBatch]);
 
   // Early return after all hooks

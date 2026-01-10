@@ -1,7 +1,6 @@
 'use client'
 
 import type { Player } from '@/lib/realtime/types'
-import { getInitials } from '@/lib/utils'
 
 interface LeaderboardProps {
   players: Player[]

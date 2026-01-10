@@ -15,7 +15,6 @@ interface TriviaProps {
 
 export default function Trivia({
   roomState,
-  isHost,
   userId,
   onAnswer,
 }: TriviaProps) {
