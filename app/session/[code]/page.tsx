@@ -605,9 +605,10 @@ export default function SessionPage() {
             const isLastRound = currentTurnIndex + 1 >= maxTurns;
             
             if (bothWinnersSelected && isLastRound && advancePictionaryTurnRef.current) {
-            setTimeout(() => {
-              advancePictionaryTurnRef.current?.();
-            }, 3000);
+              setTimeout(() => {
+                advancePictionaryTurnRef.current?.();
+              }, 3000);
+            }
           }
         } else {
           console.log('Host: Conditions NOT met', {
@@ -1314,15 +1315,16 @@ export default function SessionPage() {
         const isLastRound = currentTurnIndex + 1 >= maxTurns;
         
         if (bothWinnersSelected && isLastRound && advancePictionaryTurnRef.current) {
-        // Auto-advance to results after 10 seconds if button not clicked
-        // Clear any existing timer
-        if (revealAdvanceTimerRef.current) {
-          clearTimeout(revealAdvanceTimerRef.current);
+          // Auto-advance to results after 10 seconds if button not clicked
+          // Clear any existing timer
+          if (revealAdvanceTimerRef.current) {
+            clearTimeout(revealAdvanceTimerRef.current);
+          }
+          revealAdvanceTimerRef.current = setTimeout(() => {
+            advancePictionaryTurnRef.current?.();
+            revealAdvanceTimerRef.current = null;
+          }, 10000);
         }
-        revealAdvanceTimerRef.current = setTimeout(() => {
-          advancePictionaryTurnRef.current?.();
-          revealAdvanceTimerRef.current = null;
-        }, 10000);
       }
       
       // Also broadcast the PICK_WINNER event for non-hosts (though host already processed)
