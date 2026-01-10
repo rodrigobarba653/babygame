@@ -56,6 +56,6 @@ export const TRIVIA_QUESTIONS: TriviaQuestion[] = [
   },
 ]
 
-// For testing: limit to first 2 questions
-export const NUM_TRIVIA_QUESTIONS = 2
+// Use all 8 trivia questions
+export const NUM_TRIVIA_QUESTIONS = 8
 
