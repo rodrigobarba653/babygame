@@ -253,10 +253,10 @@ export default function SessionPage() {
             }
           }
         })
-        .on('presence', { event: 'join' }, ({ key, newPresences }) => {
-          // Handle player join
+        .on('presence', { event: 'join' }, () => {
+          // Handle player join - presence sync already handles this
         })
-        .on('presence', { event: 'leave' }, ({ key, leftPresences }) => {
+        .on('presence', { event: 'leave' }, ({ key }) => {
           // Handle player leave - if host leaves, other players should see host disconnected
           if (isHost && hostStateRef.current) {
             // Host: remove player from state if they truly left (not just reconnecting)
