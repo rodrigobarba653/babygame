@@ -743,13 +743,17 @@ export default function SessionPage() {
     // Move to next question or complete trivia
     setTimeout(() => {
       if (questionIndex < NUM_TRIVIA_QUESTIONS - 1) {
-        startTriviaQuestion(questionIndex + 1)
+        if (startTriviaQuestionRef.current) {
+          startTriviaQuestionRef.current(questionIndex + 1)
+        }
       } else {
         // Trivia complete - redirect to dashboard
-        completeTrivia()
+        if (completeTriviaRef.current) {
+          completeTriviaRef.current()
+        }
       }
     }, 3000)
-  }, [isHost, broadcastRoomState, startTriviaQuestion, completeTrivia])
+  }, [isHost, broadcastRoomState])
 
   // Store handleTriviaReveal in ref for use in other callbacks
   useEffect(() => {
