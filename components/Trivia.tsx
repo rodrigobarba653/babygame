@@ -123,7 +123,7 @@ export default function Trivia({
                 } ${bgColor}`}
               >
                 <div className="flex items-center justify-between">
-                  <span>{option}</span>
+                  <span className="text-black">{option}</span>
                   {showResults && isCorrect && (
                     <span className="text-green-600 font-bold">✓ Correct</span>
                   )}

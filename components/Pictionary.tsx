@@ -334,7 +334,7 @@ export default function Pictionary({
                       value={guessText}
                       onChange={(e) => setGuessText(e.target.value)}
                       placeholder="Enter your guess..."
-                      className="flex-1 px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 min-h-[44px]"
+                      className="flex-1 px-4 py-3 text-base text-black border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 min-h-[44px]"
                       autoFocus
                     />
                     <button
@@ -468,7 +468,7 @@ export default function Pictionary({
                                 )}
                               </div>
                               <div className="text-sm text-gray-600">
-                                {guess.text || 'No guess text'}
+                                {guess.text || "No guess text"}
                               </div>
                               {isClosest && (
                                 <div className="text-xs text-green-700 font-semibold mt-1">

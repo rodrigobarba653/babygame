@@ -387,7 +387,7 @@ export default function DashboardPage() {
                   placeholder="Enter 4-letter code (e.g., ABCD)"
                   maxLength={4}
                   required
-                  className="flex-1 px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent uppercase min-h-[44px]"
+                  className="flex-1 px-4 py-3 text-base text-black border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent uppercase min-h-[44px]"
                 />
                 <button
                   type="submit"
