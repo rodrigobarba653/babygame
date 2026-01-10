@@ -660,9 +660,6 @@ export default function SessionPage() {
   const startGame = useCallback(() => {
     if (!isHost || !hostStateRef.current) return
 
-    // Lock turn order
-    const turnOrder = hostStateRef.current.players.map((p) => p.userId)
-    
     // Shuffle prompts
     const prompts = [...PICTIONARY_PROMPTS].sort(() => Math.random() - 0.5)
     pictionaryPromptsRef.current = prompts
