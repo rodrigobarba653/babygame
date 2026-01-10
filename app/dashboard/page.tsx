@@ -213,12 +213,15 @@ export default function DashboardPage() {
       const expiresAt = new Date()
       expiresAt.setHours(expiresAt.getHours() + 2)
 
-      const { error } = await supabase.from('sessions').insert({
+      // Type assertion for insert operation
+      const sessionInsert = {
         code,
         host_id: user.id,
         expires_at: expiresAt.toISOString(),
         status: 'lobby',
-      })
+      } as { code: string; host_id: string; expires_at: string; status: string }
+
+      const { error } = await supabase.from('sessions').insert(sessionInsert)
 
       if (error) throw error
 
