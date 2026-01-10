@@ -124,6 +124,10 @@ export default function SessionPage() {
 
           setIsHost(sessionData.host_id === user.id)
 
+          // Store session data in a variable accessible in closures
+          const sessionHostId = sessionData.host_id
+          const sessionStatus = sessionData.status
+
       // Get profile
       const { data: profile } = await supabase
         .from('profiles')
@@ -191,11 +195,11 @@ export default function SessionPage() {
             }
           } else if (!isHost) {
             // Non-host: update local state from presence
-            setRoomState((prev) => {
+              setRoomState((prev) => {
               if (!prev) {
                 return {
                   code: code.toUpperCase(),
-                  hostId: session.host_id,
+                  hostId: sessionHostId,
                   phase: 'lobby',
                   players,
                   timer: null,
@@ -219,7 +223,7 @@ export default function SessionPage() {
               }
               
               // Check if host is present
-              const hostPresent = players.some((p) => p.userId === session.host_id)
+              const hostPresent = players.some((p) => p.userId === sessionHostId)
               if (hostPresent && isReconnecting) {
                 // Host is present, but wait for state broadcast before allowing entry
                 return mergedState
@@ -231,16 +235,16 @@ export default function SessionPage() {
 
           // Check if host is still present - only set disconnected if we're sure host is gone
           // (not during initial sync or if host just reconnected)
-          const hostPresent = players.some((p) => p.userId === session.host_id)
+          const hostPresent = players.some((p) => p.userId === sessionHostId)
           // Only mark as disconnected if host was present before but now isn't
           // This prevents false positives during initial sync or reconnection
           if (!hostPresent && !isHost && hostStateRef.current) {
             // Double check - only disconnect if host was definitely there before
-            const hostWasThere = hostStateRef.current.players.some((p) => p.userId === session.host_id)
+            const hostWasThere = hostStateRef.current.players.some((p) => p.userId === sessionHostId)
             if (hostWasThere) {
               // Add a small delay to avoid race conditions during presence sync
               setTimeout(() => {
-                const stillNoHost = !channel.presenceState()[session.host_id]
+                const stillNoHost = !channel.presenceState()[sessionHostId]
                 if (stillNoHost) {
                   setHostDisconnected(true)
                 }
@@ -300,7 +304,7 @@ export default function SessionPage() {
             }
             
             // If session is in trivia_complete, restore to results phase (trivia finished, can continue to pictionary)
-            const initialPhase = session.status === 'trivia_complete' ? 'results' : 'lobby'
+            const initialPhase = sessionStatus === 'trivia_complete' ? 'results' : 'lobby'
             
             if (userIsHost) {
               // Host: if re-entering during active game, wait for state sync
@@ -342,8 +346,8 @@ export default function SessionPage() {
       // Listen for broadcasts
       channel.on('broadcast', { event: 'ROOM_STATE' }, ({ payload }) => {
         const receivedState = payload as RoomState
-        // Use session.host_id and user.id from closure
-        const currentUserIsHost = session.host_id === user.id
+        // Use sessionHostId and user.id from closure
+        const currentUserIsHost = sessionHostId === user.id
         
         // If we were reconnecting, now we have state - allow entry
         if (isReconnecting) {
@@ -483,8 +487,8 @@ export default function SessionPage() {
         console.log('PICK_WINNER broadcast received', { isHost, payload, currentUserId: user.id })
         
         // Process on host side only (host is authoritative)
-        // Check if current user is host using session.host_id (more reliable than isHost state)
-        const currentUserIsHost = session.host_id === user.id
+        // Check if current user is host using sessionHostId (more reliable than isHost state)
+        const currentUserIsHost = sessionHostId === user.id
         
         if (!currentUserIsHost) {
           console.log('Non-host received PICK_WINNER broadcast, ignoring (waiting for ROOM_STATE sync)')
