@@ -106,20 +106,23 @@ export default function SessionPage() {
             return
           }
 
+          // Type assertion for selected fields
+          const sessionData = session as { code: string; host_id: string; expires_at: string | null; status: string; winner_id: string | null }
+
           const now = new Date()
-          const expiresAt = new Date(session.expires_at || 0)
+          const expiresAt = new Date(sessionData.expires_at || 0)
 
           // Store session status to track game completion
-          setSessionStatus(session.status)
+          setSessionStatus(sessionData.status)
 
           // Only block access if session is expired (allow access even if ended - we want to show results/reveal)
-          if (expiresAt < now && session.status !== 'ended') {
+          if (expiresAt < now && sessionData.status !== 'ended') {
             showModal('Session Expired', 'This session has expired. Redirecting to dashboard...', 'warning')
             setTimeout(() => router.push('/dashboard'), 2000)
             return
           }
 
-          setIsHost(session.host_id === user.id)
+          setIsHost(sessionData.host_id === user.id)
 
       // Get profile
       const { data: profile } = await supabase
@@ -132,6 +135,9 @@ export default function SessionPage() {
         router.push('/profile')
         return
       }
+
+      // Type assertion for selected fields
+      const profileData = profile as { name: string; relationship: string }
 
       // Join Realtime channel
       const channel = supabase.channel(`room:${code.toUpperCase()}`, {
@@ -272,8 +278,8 @@ export default function SessionPage() {
             const existingPlayer = hostStateRef.current?.players.find((p) => p.userId === user.id)
             await channel.track({
               userId: user.id,
-              name: profile.name,
-              relationship: profile.relationship,
+              name: profileData.name,
+              relationship: profileData.relationship,
               points: existingPlayer?.points ?? 0, // Preserve points if re-entering
               joinedAt: existingPlayer?.joinedAt ?? Date.now(), // Preserve original join time
             })
@@ -310,8 +316,8 @@ export default function SessionPage() {
                   players: [
                     {
                       userId: user.id,
-                      name: profile.name,
-                      relationship: profile.relationship as any,
+                      name: profileData.name,
+                      relationship: profileData.relationship as any,
                       points: 0, // Points will be restored from presence if available
                       joinedAt: Date.now(),
                     },
@@ -368,7 +374,9 @@ export default function SessionPage() {
             .eq('code', code.toUpperCase())
             .single()
             .then(({ data: sessionData }) => {
-              if (sessionData?.status === 'ended') {
+              // Type assertion for selected field
+              const sessionStatusData = sessionData as { status: string } | null
+              if (sessionStatusData?.status === 'ended') {
                 setSessionStatus('ended')
               }
             })

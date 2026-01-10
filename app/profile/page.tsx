@@ -36,8 +36,10 @@ export default function ProfilePage() {
       if (user) {
         const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single()
         if (data) {
-          setName(data.name)
-          setRelationship(data.relationship as Relationship)
+          // Type assertion for selected fields
+          const profileData = data as { name: string; relationship: string }
+          setName(profileData.name)
+          setRelationship(profileData.relationship as Relationship)
         }
       }
     }

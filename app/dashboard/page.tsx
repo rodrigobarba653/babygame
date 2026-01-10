@@ -97,7 +97,9 @@ export default function DashboardPage() {
         return
       }
 
-      if (sessionCheck.host_id !== user.id) {
+      // Type assertion for selected fields
+      const sessionCheckData = sessionCheck as { code: string; host_id: string }
+      if (sessionCheckData.host_id !== user.id) {
         showModal('Error', 'You do not have permission to delete this session. Only the host can delete it.', 'error')
         return
       }
@@ -192,7 +194,9 @@ export default function DashboardPage() {
           .eq('code', code)
           .single()
 
-        if (!data) {
+        // Type assertion for selected field
+        const sessionData = data as { code: string } | null
+        if (!sessionData) {
           exists = false
         } else {
           code = generateSessionCode()
@@ -251,10 +255,13 @@ export default function DashboardPage() {
         return
       }
 
-      const now = new Date()
-      const expiresAt = new Date(data.expires_at)
+      // Type assertion for selected fields
+      const sessionData = data as { code: string; expires_at: string | null; status: string }
 
-      if (expiresAt < now || data.status === 'ended') {
+      const now = new Date()
+      const expiresAt = new Date(sessionData.expires_at || 0)
+
+      if (expiresAt < now || sessionData.status === 'ended') {
         showModal('Session Expired', 'This session has expired or ended.', 'warning')
         setLoading(false)
         return

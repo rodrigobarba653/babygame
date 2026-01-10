@@ -50,7 +50,9 @@ export async function GET(request: NextRequest) {
         .eq('id', user.id)
         .single()
 
-      if (!profile) {
+      // Type assertion for selected field
+      const profileData = profile as { id: string } | null
+      if (!profileData) {
         redirectUrl = '/profile'
       }
     }
