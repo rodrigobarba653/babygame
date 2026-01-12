@@ -1459,7 +1459,7 @@ export default function SessionPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 to-blue-100">
         <div className="text-center">
-          <div className="text-2xl text-gray-600">Loading session...</div>
+          <div className="text-2xl text-gray-700">Loading session...</div>
         </div>
       </div>
     )
@@ -1474,17 +1474,17 @@ export default function SessionPage() {
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-pink-600"></div>
           </div>
           <h2 className="text-2xl font-bold text-pink-600 mb-4">Reconnecting to Session</h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-700 mb-6">
             {isHost 
               ? "Please wait while we sync the game state..."
               : "Please wait for the host to be ready..."}
           </p>
-          <p className="text-sm text-gray-500 mb-6">
+          <p className="text-sm text-gray-600 mb-6">
             Session: <span className="font-mono font-bold">{code.toUpperCase()}</span>
           </p>
           <button
             onClick={handleExitSession}
-            className="px-4 py-2 text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            className="px-4 py-2 text-gray-700 hover:text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
           >
             Cancel & Return to Dashboard
           </button>
@@ -1498,7 +1498,7 @@ export default function SessionPage() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-100 to-blue-100">
         <div className="bg-white rounded-lg shadow-xl p-8 max-w-md">
           <h2 className="text-2xl font-bold text-red-600 mb-4">Host Disconnected</h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-700 mb-6">
             The host has left the session. Please return to the dashboard.
           </p>
           <button

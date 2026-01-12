@@ -85,8 +85,8 @@ export default function Modal({
               <span className={getIconColor()}>{getIcon()}</span>
             </div>
             <div className="flex-1">
-              <h3 className="text-xl font-bold mb-2">{title}</h3>
-              <p className="text-base whitespace-pre-line">{message}</p>
+              <h3 className="text-xl font-bold mb-2 text-gray-900">{title}</h3>
+              <p className="text-base whitespace-pre-line text-gray-800">{message}</p>
             </div>
           </div>
         </div>

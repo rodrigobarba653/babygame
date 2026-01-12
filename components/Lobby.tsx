@@ -16,10 +16,10 @@ export default function Lobby({ roomState, isHost, onStartGame }: LobbyProps) {
     <div className="max-w-4xl mx-auto px-4">
       <div className="bg-white rounded-lg shadow-xl p-4 sm:p-8">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-2 text-pink-600">Game Lobby</h2>
-        <p className="text-center text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">Session Code: <span className="font-mono font-bold text-base sm:text-lg">{roomState.code}</span></p>
+        <p className="text-center text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">Session Code: <span className="font-mono font-bold text-base sm:text-lg text-gray-900">{roomState.code}</span></p>
 
         <div className="mb-6">
-          <h3 className="text-lg font-semibold mb-4 text-gray-800">
+          <h3 className="text-lg font-semibold mb-4 text-gray-900">
             Players ({roomState.players.length}/10)
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -32,8 +32,8 @@ export default function Lobby({ roomState, isHost, onStartGame }: LobbyProps) {
                   {getInitials(player.name)}
                 </div>
                 <div className="flex-1">
-                  <div className="font-medium text-gray-800">{player.name}</div>
-                  <div className="text-sm text-gray-500">{player.relationship}</div>
+                  <div className="font-medium text-gray-900">{player.name}</div>
+                  <div className="text-sm text-gray-600">{player.relationship}</div>
                 </div>
                 {roomState.hostId === player.userId && (
                   <span className="px-2 py-1 text-xs font-semibold bg-yellow-400 text-yellow-900 rounded">
@@ -68,7 +68,7 @@ export default function Lobby({ roomState, isHost, onStartGame }: LobbyProps) {
         )}
 
         {!isHost && (
-          <div className="text-center text-gray-600">
+          <div className="text-center text-gray-700">
             Waiting for host to start the game...
           </div>
         )}

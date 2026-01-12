@@ -323,7 +323,7 @@ export default function DashboardPage() {
               <h1 className="text-2xl sm:text-3xl font-bold text-pink-600 mb-2">
                 Welcome{name ? `, ${name}` : ''}!
               </h1>
-              <p className="text-gray-600 text-sm sm:text-base">Gender Reveal Party Game</p>
+              <p className="text-gray-700 text-sm sm:text-base">Gender Reveal Party Game</p>
             </div>
             <button
               onClick={handleLogout}
@@ -337,11 +337,11 @@ export default function DashboardPage() {
             {activeSession && (
               <div className="bg-blue-50 border-2 border-blue-400 rounded-lg p-6">
                 <div className="text-center mb-4">
-                  <h2 className="text-xl font-semibold mb-2 text-blue-800">Trivia Complete!</h2>
-                  <p className="text-gray-700 mb-2">
-                    Session: <span className="font-mono font-bold">{activeSession.code}</span>
+                  <h2 className="text-xl font-semibold mb-2 text-blue-900">Trivia Complete!</h2>
+                  <p className="text-gray-800 mb-2">
+                    Session: <span className="font-mono font-bold text-gray-900">{activeSession.code}</span>
                   </p>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-gray-700 mb-4">
                     Ready to continue to Pictionary? Click the button below to start the second game.
                   </p>
                 </div>
@@ -364,8 +364,8 @@ export default function DashboardPage() {
             )}
 
             <div className="border-2 border-dashed border-pink-300 rounded-lg p-6 text-center">
-              <h2 className="text-xl font-semibold mb-4 text-gray-800">Create a Session</h2>
-              <p className="text-gray-600 mb-4">
+              <h2 className="text-xl font-semibold mb-4 text-gray-900">Create a Session</h2>
+              <p className="text-gray-700 mb-4">
                 Start a new game session as the host. You&apos;ll be able to control the game flow.
               </p>
               <button
@@ -378,7 +378,7 @@ export default function DashboardPage() {
             </div>
 
             <div className="border-t pt-6">
-              <h2 className="text-xl font-semibold mb-4 text-gray-800">Join a Session</h2>
+              <h2 className="text-xl font-semibold mb-4 text-gray-900">Join a Session</h2>
               <form onSubmit={handleJoinSession} className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="text"

@@ -86,11 +86,11 @@ export default function ProfilePage() {
         <h1 className="text-2xl sm:text-3xl font-bold text-center mb-2 text-pink-600">
           Complete Your Profile
         </h1>
-        <p className="text-center text-gray-600 mb-6 sm:mb-8 text-sm sm:text-base">Tell us a bit about yourself</p>
+        <p className="text-center text-gray-700 mb-6 sm:mb-8 text-sm sm:text-base">Tell us a bit about yourself</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-900 mb-2">
               Name
             </label>
             <input
@@ -105,7 +105,7 @@ export default function ProfilePage() {
           </div>
 
           <div>
-            <label htmlFor="relationship" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="relationship" className="block text-sm font-medium text-gray-900 mb-2">
               Relationship
             </label>
             <select
@@ -113,7 +113,7 @@ export default function ProfilePage() {
               value={relationship}
               onChange={(e) => setRelationship(e.target.value as Relationship)}
               required
-              className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent min-h-[44px]"
+              className="w-full px-4 py-3 text-base text-black border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent min-h-[44px]"
             >
               {RELATIONSHIPS.map((rel) => (
                 <option key={rel} value={rel}>

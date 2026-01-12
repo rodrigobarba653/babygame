@@ -16,7 +16,7 @@ export default function Leaderboard({ players }: LeaderboardProps) {
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-4">
-      <h3 className="text-lg font-semibold mb-3 text-gray-800">Leaderboard</h3>
+      <h3 className="text-lg font-semibold mb-3 text-gray-900">Leaderboard</h3>
       <div className="space-y-2">
         {sortedPlayers.map((player, index) => (
           <div
@@ -36,11 +36,11 @@ export default function Leaderboard({ players }: LeaderboardProps) {
                 {index + 1}
               </div>
               <div>
-                <div className="font-medium text-gray-800">{player.name}</div>
-                <div className="text-xs text-gray-500">{player.relationship}</div>
+                <div className="font-medium text-gray-900">{player.name}</div>
+                <div className="text-xs text-gray-600">{player.relationship}</div>
               </div>
             </div>
-            <div className="font-bold text-lg text-gray-700">{player.points} pts</div>
+            <div className="font-bold text-lg text-gray-900">{player.points} pts</div>
           </div>
         ))}
       </div>

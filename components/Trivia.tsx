@@ -90,10 +90,10 @@ export default function Trivia({
     <div className="max-w-4xl mx-auto px-4">
       <div className="bg-white rounded-lg shadow-xl p-4 sm:p-8">
         <div className="text-center mb-4 sm:mb-6">
-          <div className="text-xs sm:text-sm text-gray-500 mb-2">
+          <div className="text-xs sm:text-sm text-gray-600 mb-2">
             Question {trivia.questionIndex + 1} of {NUM_TRIVIA_QUESTIONS}
           </div>
-          <h2 className="text-lg sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4 px-2">{question.text}</h2>
+          <h2 className="text-lg sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 px-2">{question.text}</h2>
           <Timer timer={roomState.timer} />
         </div>
 
@@ -147,12 +147,12 @@ export default function Trivia({
         />
 
         {!hasAnswered && !showResults && (
-          <div className="text-center text-gray-500 text-sm">
+          <div className="text-center text-gray-700 text-sm">
             Select your answer above
           </div>
         )}
         {hasAnswered && !showResults && (
-          <div className="text-center text-blue-600 text-sm font-medium">
+          <div className="text-center text-blue-700 text-sm font-medium">
             ✓ Answer selected - You can change your answer before time runs out
           </div>
         )}

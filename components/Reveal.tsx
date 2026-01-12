@@ -66,7 +66,7 @@ export default function Reveal({ roomState, userId, sessionCode }: RevealProps) 
         <div className="bg-white rounded-lg shadow-xl p-4 sm:p-8">
           {loading && (
             <div className="text-center py-12">
-              <div className="text-2xl text-gray-600">Loading reveal...</div>
+              <div className="text-2xl text-gray-700">Loading reveal...</div>
             </div>
           )}
 
@@ -81,7 +81,7 @@ export default function Reveal({ roomState, userId, sessionCode }: RevealProps) 
               <div className="text-4xl sm:text-6xl font-bold text-blue-600 mb-6 sm:mb-8 animate-bounce">
                 {revealText}
               </div>
-              <div className="text-xl sm:text-2xl text-gray-700 mb-6 sm:mb-8">
+              <div className="text-xl sm:text-2xl text-gray-900 mb-6 sm:mb-8">
                 Congratulations, {winner.name}! 🎉
               </div>
               <Leaderboard players={roomState.players} />
@@ -96,10 +96,10 @@ export default function Reveal({ roomState, userId, sessionCode }: RevealProps) 
     <div className="max-w-4xl mx-auto px-4">
       <div className="bg-white rounded-lg shadow-xl p-4 sm:p-8">
         <div className="text-center py-6 sm:py-12">
-          <div className="text-2xl sm:text-3xl font-bold text-gray-700 mb-4">
+          <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">
             You didn&apos;t win
           </div>
-          <div className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8">
+          <div className="text-lg sm:text-xl text-gray-700 mb-6 sm:mb-8">
             Only the winner can see the gender reveal.
           </div>
           <Leaderboard players={roomState.players} />

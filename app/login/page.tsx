@@ -42,11 +42,11 @@ export default function LoginPage() {
         <h1 className="text-2xl sm:text-3xl font-bold text-center mb-2 text-pink-600">
           Gender Reveal Party Game
         </h1>
-        <p className="text-center text-gray-600 mb-6 sm:mb-8 text-sm sm:text-base">Enter your email to get started</p>
+        <p className="text-center text-gray-700 mb-6 sm:mb-8 text-sm sm:text-base">Enter your email to get started</p>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">
               Email
             </label>
             <input

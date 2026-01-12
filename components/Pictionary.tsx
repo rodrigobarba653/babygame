@@ -256,7 +256,7 @@ export default function Pictionary({
       <div className="bg-white rounded-lg shadow-xl p-4 sm:p-8">
         <div className="mb-4">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-2">
-            <div className="text-sm text-gray-500 text-center md:text-left">
+            <div className="text-sm text-gray-600 text-center md:text-left">
               Round {pictionary.turnIndex + 1} - Pictionary
             </div>
             {/* Show drawer indicator during drawing phase */}
@@ -307,14 +307,14 @@ export default function Pictionary({
                     <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                       <p className="text-blue-800 font-semibold">
                         You&apos;re drawing:{" "}
-                        <span className="text-xl">{pictionary.promptFull}</span>
+                        <span className="text-xl text-blue-900">{pictionary.promptFull}</span>
                       </p>
                     </div>
                   ) : (
                     <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                       <p className="text-gray-700">
                         Drawing:{" "}
-                        <span className="font-mono text-lg">
+                        <span className="font-mono text-lg text-gray-900">
                           {pictionary.promptMasked}
                         </span>
                       </p>
@@ -351,7 +351,7 @@ export default function Pictionary({
                 <div className="mt-4 bg-green-50 border border-green-200 rounded-lg p-4 text-center">
                   <p className="text-green-800 font-semibold text-lg">
                     The word was:{" "}
-                    <span className="text-xl">{pictionary.promptFull}</span>
+                    <span className="text-xl text-green-900">{pictionary.promptFull}</span>
                   </p>
                 </div>
               )}
@@ -362,10 +362,10 @@ export default function Pictionary({
           <div className="lg:col-span-1 space-y-4">
             {isDrawer && roomState.phase === "pictionary_reveal" && (
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                <h3 className="font-semibold mb-3 text-gray-800">
+                <h3 className="font-semibold mb-3 text-gray-900">
                   Pick Winners
                 </h3>
-                <p className="text-xs text-gray-600 mb-3">
+                <p className="text-xs text-gray-700 mb-3">
                   Select the <strong>closest</strong> guess (2 pts) and the{" "}
                   <strong>funniest</strong> guess (1 pt)
                 </p>
@@ -384,7 +384,7 @@ export default function Pictionary({
                     return null;
                   })()}
                   {!pictionary.guesses || pictionary.guesses.length === 0 ? (
-                    <p className="text-gray-600 text-sm">
+                    <p className="text-gray-700 text-sm">
                       No guesses submitted yet
                     </p>
                   ) : (
@@ -467,7 +467,7 @@ export default function Pictionary({
                                   player?.name || "Unknown"
                                 )}
                               </div>
-                              <div className="text-sm text-gray-600">
+                              <div className="text-sm text-gray-800">
                                 {guess.text || "No guess text"}
                               </div>
                               {isClosest && (
@@ -630,7 +630,7 @@ export default function Pictionary({
 
             {!isDrawer && roomState.phase === "pictionary_guess" && (
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <p className="text-blue-800 text-sm">
+                <p className="text-blue-900 text-sm">
                   {pictionary.guesses.find((g) => g.userId === userId)
                     ? "Guess submitted! Waiting for others..."
                     : "Submit your guess above"}
@@ -711,13 +711,13 @@ export default function Pictionary({
                             if (isDummy) return null; // Don&apos;t show dummy winners in congrats
                             return (
                               <div className="bg-green-100 border-2 border-green-500 rounded-lg p-4">
-                                <p className="text-sm text-gray-600 mb-1">
+                                <p className="text-sm text-gray-700 mb-1">
                                   Closest Guess
                                 </p>
-                                <p className="text-xl font-bold text-green-700">
+                                <p className="text-xl font-bold text-green-800">
                                   {closestPlayer?.name || "Unknown"}
                                 </p>
-                                <p className="text-sm text-green-600 font-semibold">
+                                <p className="text-sm text-green-700 font-semibold">
                                   +2 points
                                 </p>
                               </div>
@@ -737,13 +737,13 @@ export default function Pictionary({
                             if (isDummy) return null; // Don&apos;t show dummy winners in congrats
                             return (
                               <div className="bg-purple-100 border-2 border-purple-500 rounded-lg p-4">
-                                <p className="text-sm text-gray-600 mb-1">
+                                <p className="text-sm text-gray-700 mb-1">
                                   Funniest Guess
                                 </p>
-                                <p className="text-xl font-bold text-purple-700">
+                                <p className="text-xl font-bold text-purple-800">
                                   {funniestPlayer?.name || "Unknown"}
                                 </p>
-                                <p className="text-sm text-purple-600 font-semibold">
+                                <p className="text-sm text-purple-700 font-semibold">
                                   +1 point
                                 </p>
                               </div>
@@ -761,7 +761,7 @@ export default function Pictionary({
                       )}
 
                       {!isHost && (
-                        <p className="text-gray-600 text-sm">
+                        <p className="text-gray-700 text-sm">
                           Waiting for host to continue...
                         </p>
                       )}
